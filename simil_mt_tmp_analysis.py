@@ -1,7 +1,6 @@
 import ntuple_config
 import ntuple_processor
 
-#from ntuple_config.legacy_smhtt_2017.channel_selection import mt_channel, et_channel, tt_channel, em_channel
 from ntuple_config.legacy_smhtt_2017.channel_selection import channel_selection
 from ntuple_config.legacy_smhtt_2017.queries import data_query, DY_query, tt_query, W_query, HTT_query, VV_query, ZTT_embedded_query, HWW_query, ggHWW_query, qqHWW_query, VH_query, WH_query, ZH_query, ggH_query, qqH_query
 from ntuple_config.legacy_smhtt_2017.process_selection import DY_process_selection, TT_process_selection, VV_process_selection, W_process_selection, HTT_process_selection, HWW_process_selection, ZTT_process_selection, ZTT_embedded_process_selection, ZL_process_selection, ZJ_process_selection, TTT_process_selection, TTL_process_selection, TTJ_process_selection, VVT_process_selection, VVJ_process_selection, VVL_process_selection, VH_process_selection, WH_process_selection, ZH_process_selection, ttH_process_selection, ggH125_process_selection, qqH125_process_selection
@@ -31,15 +30,12 @@ def setup_logging(output_file, level=logging.DEBUG):
     logger.addHandler(file_handler)
 
 def main():
-    #db_path = '/home/gallim/KIT/sm-htt-analysis/datasets/datasets.json'
     db_path = '/home/gallim/KIT/benchmark-reference-shape-producer/datasets/datasets.json'
 
-    #base_dir = '/ceph/htautau/deeptau/2017/'
+    #base_dir = '/ceph/htautau/deeptau_eoy/2017/'
     base_dir = '/local/scratch/hdd/gallim/'
     base_file = base_dir + 'ntuples/'
-    #base_friends = [base_dir + 'friends/' + f for f in ['SVFit/', 'MELA/', 'FakeFactors/']]
-    #base_friends = [base_dir + 'friends/' + f for f in ['SVFit/']]
-    base_friends = list()
+    base_friends = [base_dir + 'friends/' + f for f in ['SVFit/', 'MELA/', 'FakeFactors/']]
 
 
     # Hidden
@@ -155,7 +151,8 @@ def main():
 
     for channel in channels:
         if channel == 'mt':
-            um.book([nominals['2017']['units']['mt'][d] for d in ['data', 'ztt', 'zl', 'zj', 'ttl', 'ttt', 'ttj', 'vvl', 'vvj', 'vvt', 'w']], [same_sign])
+            um.book([nominals['2017']['units']['mt'][d] for d in ['data', 'ztt', 'zl', 'zj', 'ttl', 'ttj', 'vvl', 'vvj', 'w']], [same_sign])
+            um.book([nominals['2017']['units']['mt'][d] for d in ['ttt', 'vvt']])
             um.book([nominals['2017']['units']['mt'][d] for d in ['ztt', 'zl', 'zj', 'ttl', 'ttt', 'ttj', 'vvl', 'vvj', 'vvt', 'w', 'ggh', 'qqh']], [*prefiring_variations, *jet_es_variations, *met_unclustered_variations, *lep_trigger_eff_variations_mt, *btag_eff_variations, *mistag_eff_variations])
             um.book([nominals['2017']['units']['mt'][d] for d in ['ztt', 'ttt', 'ttl', 'vvl', 'vvt', 'ggh', 'qqh']], [*tau_es_3prong_variations, *tau_es_1prong_variations, *tau_es_1prong1pizero_variations, *mc_tau_es_3prong_variations, *mc_tau_es_1prong_variations, *mc_tau_es_1prong1pizero_variations])
             um.book([nominals['2017']['units']['mt'][d] for d in ['ztt', 'zj', 'zl', 'w', 'ggh', 'qqh']], [*recoil_resolution_variations, *recoil_response_variations])
