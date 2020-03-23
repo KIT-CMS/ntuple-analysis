@@ -1,9 +1,12 @@
 [submodule "ntuple_config"]
 	path = ntuple_config
 	url = https://github.com/KIT-CMS/ntuple_config.git
+	branch = master
 [submodule "ntuple_processor"]
 	path = ntuple_processor
 	url = https://github.com/KIT-CMS/ntuple_processor.git
+	branch = master
 [submodule "ntuple_testsuite"]
 	path = ntuple_testsuite
 	url = https://github.com/KIT-CMS/ntuple_testsuite.git
+	branch = master
