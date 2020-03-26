@@ -6,7 +6,7 @@ from ntuple_config.legacy_smhtt_2017.file_names import nominal_files
 from ntuple_config.legacy_smhtt_2017.process_selection import DY_process_selection, TT_process_selection, VV_process_selection, W_process_selection, HTT_process_selection, HWW_process_selection, ZTT_process_selection, ZTT_embedded_process_selection, ZL_process_selection, ZJ_process_selection, TTT_process_selection, TTL_process_selection, TTJ_process_selection, VVT_process_selection, VVJ_process_selection, VVL_process_selection, VH_process_selection, WH_process_selection, ZH_process_selection, ttH_process_selection, ggH125_process_selection, qqH125_process_selection
 from ntuple_config.legacy_smhtt_2017.variations import same_sign, prefiring_variations, mc_tau_es_3prong_variations, mc_tau_es_1prong_variations, mc_tau_es_1prong1pizero_variations, tau_es_3prong_variations, tau_es_1prong_variations, tau_es_1prong1pizero_variations, ele_es_variations, ele_es_variations, jet_es_variations, met_unclustered_variations, recoil_resolution_variations, recoil_response_variations, jet_to_tau_fake_variations, ele_fake_es_1prong_variations, ele_fake_es_1prong1pizero_variations, mu_fake_es_1prong_variations, mu_fake_es_1prong1pizero_variations, lep_trigger_eff_variations_mt, lep_trigger_eff_variations_mt_emb, lep_trigger_eff_variations_et, lep_trigger_eff_variations_et_emb, btag_eff_variations, mistag_eff_variations, ggh_variations, zpt_variations, top_pt_variations
 from ntuple_processor import Histogram
-from ntuple_processor import dataset_from_nameset
+from ntuple_processor import dataset_from_artusoutput
 from ntuple_processor import Unit
 from ntuple_processor import UnitManager
 from ntuple_processor import GraphManager
@@ -54,7 +54,7 @@ def main():
     def get_nominal_datasets(channel):
         datasets = dict()
         for key, names in nominal_files.items():
-            datasets[key] = dataset_from_nameset(
+            datasets[key] = dataset_from_artusoutput(
                     key, names, channel + '_nominal', base_file, base_friends)
         return datasets
 
@@ -155,14 +155,11 @@ def main():
             um.book([nominals['2017']['units']['mt']['qqh']])
 
     g_manager = GraphManager(um.booked_units, True)
-    #g_manager.optimize(0)
-    #g_manager.optimize(1)
     g_manager.optimize(2)
     graphs = g_manager.graphs
 
-    #r_manager = RunManager(graphs, True, 32)
     r_manager = RunManager(graphs)
-    r_manager.run_locally('prototype.root')
+    r_manager.run_locally('prototype.root', 1, 1)
 
 
 
