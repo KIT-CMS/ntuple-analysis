@@ -1,16 +1,22 @@
 # ntuple-analysis
-Proposal for a new ntuple analysis package
+This package contains the necessary modules to produce stack histograms for an HTT analysis. 
 
-Temporary instructions to run:
+## Environment setup
+On KIT machines, in order not to have external dependencies (e.g. cvmfs) it is possible to build an own version of both Python3 and ROOT (PyROOT). This can be done in the following steps:
 
-- Set up environment:
-    source /cvmfs/sft.cern.ch/lcg/views/LCG_96bpython3/x86_64-centos7-gcc9-opt/setup.sh
-    source /home/gallim/KIT/root_dirs/build_update_cvmfs/bin/thisroot.sh
+- assuming that anaconda is installed (if not, follow https://linuxize.com/post/how-to-install-anaconda-on-centos-7/), create a Python3.X (3.6 is tested and works, but every version of Python >= 3.5 should be fine) environment and activate it following https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/20/conda/. 
+- clone ROOT and build it against the newly created Python3 environment
 
-    or, to run with ROOT master and Python3 on cvmfs:
-
-    source /cvmfs/sft-nightlies.cern.ch/lcg/views/dev3python3/latest/x86_64-centos7-gcc8-opt/setup.sh
-    source /cvmfs/sft-nightlies.cern.ch/lcg/views/dev3python3/latest/x86_64-centos7-gcc8-opt/bin/thisroot.sh
-
-- Run:
-    python simil_mt_tmp_analysis.py
+	- ROOT >= v6.22 
+	```bash
+	$ /usr/bin/cmake3 -DPYTHON_EXECUTABLE=<path to virtual 	python3 environment> -Dcxxmodules="OFF" -Druntime_cxxmodules="OFF" <path to ROOT source>
+	```
+	- ROOT < v6.22
+	```bash
+	$ /usr/bin/cmake3 -Dpyroot_experimental=ON -DPYTHON_EXECUTABLE=<path to virtual 	python3 environment> -Dcxxmodules="OFF" -Druntime_cxxmodules="OFF" <path to ROOT source>
+	```
+- clone this repo, taking care of using the option `--recursive`
+- in order to run an analysis script that includes this module from everywhere in the machine, remember to include the path to this repo to the `PYTHONPATH`
+```bash
+$ export PYTHONPATH=<path to local copy of ntuple-analysis>:$PYTHONPATH
+```
